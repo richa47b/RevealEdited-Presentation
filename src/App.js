@@ -1,5 +1,5 @@
 import React from 'react';
-import Deck from './Components/RevealComponents/Deck';
+import Deck from './components/RevealComponents/Deck';
 import Slides from './Slides';
 
 // import './Themes/darcula.css';
