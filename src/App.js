@@ -1,15 +1,27 @@
-import React from 'react';
-import Deck from './components/RevealComponents/Deck';
-import Slides from './Slides';
+import "./App.css";
+import Presentation from "./Presentation";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
+import SplashScreen from "./common/SplashScreen";
 
-// import './Themes/darcula.css';
-import 'reveal.js/css/theme/black.css';
-import './Themes/override.css';
+function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
 
-const App = () => (
-  <div className="App">
-    <Deck>{Slides}</Deck>
-  </div>
-);
+  const handleSplashScreenClick = () => {
+    setIsLoaded(true);
+  };
+  return (
+    <div className="App">
+      {<SplashScreen onClick={handleSplashScreenClick} isLoaded={isLoaded} />}
+      {isLoaded && (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/app" element={<Presentation />} />
+          </Routes>
+        </BrowserRouter>
+      )}
+    </div>
+  );
+}
 
 export default App;
