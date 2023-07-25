@@ -1,13 +1,12 @@
 import React from "react";
-import Deck from "./components/RevealComponents/Deck";
-import Slides from "./pages/Slides";
-import DropdownItems from "./common/SearchInput";
-
-// import "reveal.js/css/theme/beige.css";
-import "./styles/Black.css";
-import "./Themes/override.css";
 import { Container } from "reactstrap";
-
+import Deck from "../../components/RevealComponents/Deck";
+import Slides from "../Slides";
+import Gesture from "../../components/Gesture";
+// import "reveal.js/css/theme/beige.css";
+import "../../styles/Black.css";
+import "../../Themes/override.css";
+import BottomBar from "../../components/BottomBar";
 const App = () => {
   return (
     <>
@@ -29,6 +28,12 @@ const App = () => {
       <Container className="App position-relative" style={{ top: "2rem" }}>
         <Deck>{Slides}</Deck>
       </Container>
+      <div className="mic">
+        <BottomBar />
+      </div>
+      <div>
+        <Gesture></Gesture>
+      </div>
     </>
   );
 };

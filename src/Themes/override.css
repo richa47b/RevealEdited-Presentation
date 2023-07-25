@@ -6,7 +6,7 @@ body {
 
 .reveal .progress {
   /* background: rgba(0, 0, 0, 0.2); */
-  color: #edc54d;
+  color: #eaeaea;
 }
 
 .reveal h1,
@@ -17,7 +17,7 @@ body {
 }
 
 .reveal .controls {
-  color: #edc54d;
+  color: #eaeaea;
 }
 
 p,

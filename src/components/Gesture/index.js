@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-
+import Reveal from "reveal.js";
 import {
   SwipeGesture,
   RecordLandmarksForSwipe,
@@ -37,6 +37,7 @@ let activate = false;
 let handYAtFrame = -1;
 let CURRENT_GESTURE;
 let PREVIOUS_GESTURE;
+
 export const Gesture = () => {
   console.log("Gesture Initiated");
   globalSlideState

@@ -3,8 +3,10 @@ import KeyboardEventHandler from "@infinium/react-keyboard-event-handler";
 import { useStateDesigner } from "@state-designer/react";
 import { InputState } from "../../store/inputState";
 import { useCustomEventListener } from "react-custom-events";
+import Reveal from "reveal.js";
 
 const InputMapper = (props) => {
+  console.log(props, "props");
   const machine = useStateDesigner(InputState);
   let evtCounterForMenuButton = 0;
   const [selectIframe, setSelectIframe] = useState(false);
@@ -71,7 +73,7 @@ const InputMapper = (props) => {
     }
   };
 
-  const onKeyUp = (e) => {
+  const onKeyUp = (key, e) => {
     // eslint-disable-next-line default-case
     switch (e.keyCode) {
       case 80: //93
@@ -99,6 +101,9 @@ const InputMapper = (props) => {
         evtCounterForMenuButton = 0;
         break;
       case 38:
+        Reveal.removeKeyBinding("38");
+        e.stopImmediatePropagation();
+        e.preventDefault();
         console.log("UPARROWKEY");
         machine.send("UPARROWKEY");
         break;
@@ -107,6 +112,9 @@ const InputMapper = (props) => {
         machine.send("LEFTARROWKEY");
         break;
       case 40:
+        Reveal.removeKeyBinding("40");
+        e.stopImmediatePropagation();
+        e.preventDefault();
         console.log("DOWNARROWKEY");
         machine.send("DOWNARROWKEY");
         break;
@@ -197,7 +205,7 @@ const InputMapper = (props) => {
   }, [selectIframe, currentFocus, onKeyUpFrame]);
 
   return (
-    <div className="content">
+    <>
       <KeyboardEventHandler
         handleKeys={["all"]}
         handleFocusableElements
@@ -208,10 +216,10 @@ const InputMapper = (props) => {
         handleKeys={["all"]}
         handleFocusableElements
         handleEventType={"keyup"}
-        onKeyEvent={(key, e) => onKeyUp(e)}
+        onKeyEvent={(key, e) => onKeyUp(key, e)}
       />
       {props.children}
-    </div>
+    </>
   );
 };
 

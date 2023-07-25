@@ -5,6 +5,7 @@ import Slide from "../../layouts/Slide";
 import Indexbackground from "../../assets/Images/Indexbackground.svg";
 import Introduction from "../../assets/Images/Introduction.png";
 import IntroDSA from "../../assets/Images/IntroDSA.png";
+import Reveal from "reveal.js";
 
 const Catalogue = () => {
   const slideref = useRef();

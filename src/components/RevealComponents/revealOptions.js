@@ -16,7 +16,7 @@ export default {
   controlsBackArrows: "faded",
 
   // Display a presentation progress bar
-  progress: true,
+  progress: false,
 
   // Display the page number of the current slide
   slideNumber: false,
@@ -61,7 +61,7 @@ export default {
 
   // Flags if the presentation is running in an embedded mode,
   // i.e. contained within a limited portion of the screen
-  embedded: false,
+  embedded: true,
 
   // Flags if we should show a help overlay when the questionmark
   // key is pressed

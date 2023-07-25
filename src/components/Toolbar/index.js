@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { List, ListInlineItem } from "reactstrap";
+import { Button, List, ListInlineItem } from "reactstrap";
 import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
 import { globalContext } from "../../store/Constant";
 import { StatesEnum } from "../../store/states";
@@ -30,7 +30,6 @@ const ToolBar = () => {
     }
   });
   useCustomEventListener("toolbarOptions", (data) => {
-    console.log(data, "toolbar ppOptions");
     if (data === "3Dmodel") {
       setMoveRight(true);
     } else {
@@ -247,7 +246,7 @@ const ToolBar = () => {
           {ToolsBarOptions.map((item, index) => {
             return (
               <>
-                <ListInlineItem
+                <Button
                   ref={(el) => {
                     ToolsBarOptions.length > index
                       ? (inputEls.current[index] = el)
@@ -263,7 +262,7 @@ const ToolBar = () => {
                     alt=""
                     className="toolbar-icons"
                   ></img>
-                </ListInlineItem>
+                </Button>
                 {index === 0 && (
                   <span className="square border-end vertical-line"></span>
                 )}

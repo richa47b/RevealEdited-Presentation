@@ -4,6 +4,7 @@ import { useCustomEventListener } from "react-custom-events";
 import SpeechRecognition, {
   useSpeechRecognition
 } from "react-speech-recognition";
+import { Button } from "reactstrap";
 
 const Speech = ({
   onSpeechRecieved,

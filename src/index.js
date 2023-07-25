@@ -13,8 +13,9 @@ ReactDOM.render(
   <>
     <CustomCursor></CustomCursor>
     <WhiteBoard />
-    <InputMapper />
-    <App />
+    <InputMapper>
+      <App />
+    </InputMapper>
   </>,
   document.getElementById("root")
 );
