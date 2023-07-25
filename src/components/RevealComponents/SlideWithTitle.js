@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Slide from './Slide';
+import React from "react";
+import Slide from "./Slide";
 
 const SlideWithTitle = ({ title, children }) => (
   <Slide>
@@ -8,10 +7,5 @@ const SlideWithTitle = ({ title, children }) => (
     {children}
   </Slide>
 );
-
-SlideWithTitle.propTypes = {
-  title: PropTypes.string,
-  children: PropTypes.node,
-};
 
 export default SlideWithTitle;

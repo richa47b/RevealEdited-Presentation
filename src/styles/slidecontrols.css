@@ -1,0 +1,25 @@
+.slide-controls {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.control-icons-left {
+  top: 50%;
+  position: fixed;
+}
+
+.control-icons-left > polyline {
+  stroke: #ffff !important;
+}
+/* .control-icons-left {
+  stroke: #ffff !important;
+} */
+.control-icons-right > polyline {
+  stroke: #ffff !important;
+}
+.control-icons-right {
+  top: 50%;
+  position: fixed;
+  right: 0.8em !important;
+}

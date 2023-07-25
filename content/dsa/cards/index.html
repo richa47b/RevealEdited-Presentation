@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/javascript" src="./svg.min.js"></script>
+     
+     <style>
+     .svg-area {
+       padding-right: 20px;
+     } 
+     .drawing_surface {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+       height: 100%;
+       width: 100%;
+       /* max-width:800px; */
+         margin: 0px !important;
+
+     }
+     </style>
+     </head>
+  <body>
+    <div class="cursor2" id="cursorinner" style="z-index:9999"></div>
+    <div id="drawing" class="drawing_surface" style="margin-top:0px!important;">
+    <script language="javascript" type="text/javascript">
+      /* create an svg drawing */
+      var draw = SVG("drawing");
+      var card_width = 113;
+      var card_height = 175;
+      var card_gap = 100;
+      var start_x = 10;
+      var start_y = 40;
+      var card_move_factor = 60;
+      var square_size = 50;
+
+      var card_values = [5, 3, 8, "Q", 9, 2, "A" , "K", "J", 6, 7, 4];
+
+
+
+      // var card_values = [5, 13, 47, 7, 23, 2, 41, 29, 53, 17, 11];
+      var card_containers = [];
+      var ignore_clicks = false;
+      draw.addClass("svg-area");
+      var first_selected_card = null;
+
+      function fixZIndex() {
+        var __ed_loopvar1 = Date.now();
+        for (var i = card_containers.length - 1; i >= 0; i--) {
+          if (Date.now() - __ed_loopvar1 > 3000) {
+            document.body.innerHTML = "Infinite Loop Detected!";
+            throw new Error("Infinite loop");
+            break;
+          }
+
+          card_containers[i].back();
+        }
+      }
+
+      function getRegularStrokeStyle() {
+        return { color: "crimson", width: 2 };
+      }
+
+      function getMouseOverStrokeStyle() {
+        return { color: "crimson", width: 5 };
+      }
+
+      function getHighlightStrokeStyle() {
+        return { color: "green", width: 5 };
+      }
+
+      function handleMouseover(card_container) {
+        card_container.card_svg.stroke(getMouseOverStrokeStyle());
+      }
+
+      function handleMouseout(card_container) {
+        card_container.card_svg.stroke(getRegularStrokeStyle());
+      }
+
+      function handleClick(card_container) {
+        if (ignore_clicks) {
+          return;
+        }
+
+        ignore_clicks = true;
+
+        if (card_container.selected) {
+          card_container
+            .animate(100)
+            .move(card_container.x(), card_container.y() + card_move_factor);
+          card_container.selected = false;
+          first_selected_card = null;
+          ignore_clicks = false;
+          return;
+        }
+
+        if (first_selected_card === null) {
+          card_container.selected = true;
+          first_selected_card = card_container;
+          card_container
+            .animate(100)
+            .move(card_container.x(), card_container.y() - card_move_factor);
+          ignore_clicks = false;
+          return;
+        }
+
+        // This is the case where we need to swap
+
+        card_container
+          .animate(10)
+          .move(card_container.x(), card_container.y() - card_move_factor);
+
+        // It goes well with first_selected_card to keep harmony
+        var second_selected_card = card_container;
+
+        var first_card_target_x = second_selected_card.x();
+        var first_card_target_y = second_selected_card.y();
+        var first_card_target_index = second_selected_card.card_index;
+
+        var second_card_target_x = first_selected_card.x();
+        var second_card_target_y = first_selected_card.y() + card_move_factor;
+        var second_card_target_index = first_selected_card.card_index;
+
+ 
+        first_selected_card
+          .animate(300)
+          .move(first_card_target_x, first_card_target_y)
+          .after(function () {
+            second_selected_card
+              .animate(300)
+              .move(second_card_target_x, second_card_target_y)
+              .after(function () {
+                first_selected_card.card_index = first_card_target_index;
+                card_containers[first_selected_card.card_index] =
+                  first_selected_card;
+
+                second_selected_card.card_index = second_card_target_index;
+                card_containers[second_selected_card.card_index] =
+                  second_selected_card;
+
+                
+
+                fixZIndex();
+
+                function finalStepsInAnimation() {}
+
+                var animated_rects_count = 0;
+                var unanimated_rects_count = 0;
+
+                var cards_set = draw.set();
+
+                // check_complete();
+
+                cards_set.add(first_selected_card.card_svg);
+                cards_set.add(second_selected_card.card_svg);
+
+                cards_set
+                  .animate(300)
+                  .stroke(getHighlightStrokeStyle())
+                  .after(function () {
+                    animated_rects_count++;
+                    if (animated_rects_count === 2) {
+                      cards_set
+                        .animate(100)
+                        .stroke(getRegularStrokeStyle())
+                        .after(function () {
+                          unanimated_rects_count++;
+                          if (unanimated_rects_count === 2) {
+                            first_selected_card.selected = false;
+                            second_selected_card.selected = false;
+                            first_selected_card = null;
+                            ignore_clicks = false;
+                          }
+                        });
+                    }
+                  });
+              });
+          });
+      }
+
+      function draw_deck() {
+        var current_x = start_x;
+        var current_y = start_y;
+
+        var __ed_loopvar2 = Date.now();
+        for (var i = 0; i < card_values.length; i++) {
+          if (Date.now() - __ed_loopvar2 > 3000) {
+            document.body.innerHTML = "Infinite Loop Detected!";
+            throw new Error("Infinite loop");
+            break;
+          }
+
+          var container = draw.nested();
+
+          container.card_svg = container
+            .rect(card_width, card_height)
+            .attr({ x: 0, y: 0, fill: "#3C3C3C" });
+          container.card_svg.radius(5);
+          container.card_svg.stroke(getRegularStrokeStyle());
+
+          container.value_svg = container.plain(String(card_values[i]));
+          container.value_svg.font({ size: 20, family: "Verdana" });
+          container.value_svg.x(9);
+          container.value_svg.y(5);
+          container.value_svg.fill('white')
+
+          container.heart_svg = container.plain("♥");
+          container.heart_svg.font({
+            size: 20,
+            family: "Verdana",
+            fill: "#bc264b",
+          });
+          container.heart_svg.x(10);
+          container.heart_svg.y(30);
+
+          container.card_index = i;
+          container.card_value = card_values[i];
+
+          container.x(current_x);
+          container.y(current_y);
+
+          container.selected = false;
+
+          container.mouseover(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            handleMouseover(this);
+          });
+
+          container.mouseout(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            handleMouseout(this);
+          });
+
+          container.click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+            handleClick(this);
+          });
+
+          card_containers.push(container);
+
+          current_x += card_gap;
+        }
+      }
+
+      draw_deck();
+      draw.viewbox(0, -25, draw.bbox().width+50, draw.bbox().height+50);
+    </script>
+    <link
+    href="/ciechanow.ski_ice_hero/internal-combustion-engine/css/Cursor.css"
+    rel="stylesheet"
+    />
+    <script>
+      var cursorI = document.getElementById("cursorinner");
+      let localBody = document.getElementById("main_container");
+  
+      document.body.onmouseenter = (e) => {
+        // document.body.style.filter="none";
+        console.log("enteredddddddddddd");
+        const mouseEnteredInChild = { mouseEnteredInChild: "true" };
+        const eventForMouseEnteredInChild = new CustomEvent(
+          "mouseEnteredInChild",
+          { detail: mouseEnteredInChild }
+        );
+        window.parent.document.dispatchEvent(eventForMouseEnteredInChild);
+        cursorI.style.display = "block";
+      };
+  
+      document.body.onmouseleave = () => {
+        // document.body.style.filter="opacity(0.3)";
+        const mouseEnteredInChild = { mouseEnteredInChild: "false" };
+        const eventForMouseEnteredInChild = new CustomEvent(
+          "mouseEnteredInChild",
+          { detail: mouseEnteredInChild }
+        );
+        window.parent.document.dispatchEvent(eventForMouseEnteredInChild);
+        cursorI.style.display = "none";
+      };
+  
+      document.addEventListener("mousemove", function (e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        cursorI.style.left = x + "px";
+        cursorI.style.top = y + "px";
+      });
+  
+      document.addEventListener("mousedown", function () {
+        cursorI.classList.add("cursorinnerhover");
+      });
+  
+      document.addEventListener("mouseup", function () {
+        cursorI.classList.remove("cursorinnerhover");
+      });
+    </script>   
+  </body>
+  <script>
+     let borderToggleEvent = new CustomEvent('borderToggle', {
+          detail: true,
+        })
+
+       window.addEventListener('click', function (event) {
+          let borderToggleEvent = new CustomEvent('borderToggle', {
+            detail: true,
+          })
+          window.parent.document.dispatchEvent(borderToggleEvent)
+        })
+        
+      window.onkeydown=(e)=>{
+        let borderToggleEvent = new CustomEvent('borderToggle', {
+            detail: true,
+          })
+        window.parent.document.dispatchEvent(borderToggleEvent)
+        if (e.keyCode == 166 || e.keyCode == 27) {
+          e.preventDefault();
+          e = window;
+          while (e.frameElement !== null) {
+            e = e.parent;
+          }
+          e.parent.focus();
+          let borderToggleEvent = new CustomEvent('borderToggle', {
+            detail: false,
+          })
+          window.parent.document.dispatchEvent(borderToggleEvent)
+      }
+      // console.log(e, "fff");
+      e.preventDefault();
+
+      }
+  </script>
+</html>

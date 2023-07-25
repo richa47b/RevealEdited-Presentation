@@ -1,0 +1,18 @@
+@import './styles/model.css';
+@import './styles/splashScreen.css';
+@import './styles/toolbar.css';
+@import './styles/iframe.css';
+@import './styles/searchinput.css';
+@import './styles/speech.css';
+@import './styles/slidecontrols.css';
+@import './styles/cursor.css';
+@import './styles/Viewer.css';
+
+.jVARdq {
+  margin-top: 30px;
+  background-color: #242424 !important;
+}
+
+.container {
+  max-width: 95vw !important;
+}

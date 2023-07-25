@@ -1,0 +1,105 @@
+/* Toolbar Css */
+.toolbar {
+  color: White;
+  width: 535px;
+  height: 100px;
+  /* z-index: 999; */
+  position: fixed;
+  background-color: #2c2c2c;
+  border-radius: 20px;
+  bottom: 2px;
+  left: calc(50% - 283px);
+  padding-top: 3px;
+}
+
+.toolbar-list {
+  background-color: #333333;
+  width: 76px;
+  height: 71px;
+  border-radius: 10px;
+}
+
+.toolbar-icons {
+  color: #c0c0c0;
+  width: 45px;
+  height: 44px;
+  margin-top: 13px;
+  margin-left: 13px;
+}
+.bottomNavDiv {
+  height: 100px;
+  bottom: 2px;
+  position: fixed;
+  right: 0;
+  width: 100%;
+  z-index: 999;
+  /* outline: transparent !important; */
+}
+.bottomNavDiv :focus-visible {
+  outline: transparent !important;
+}
+
+.hamburger-menu {
+  margin-top: 10px;
+  width: 70px;
+  height: 68px;
+  background-color: #333333;
+  border-radius: 10px;
+  margin-left: 14px;
+}
+
+.hamburger-icon {
+  margin-top: 12px !important;
+
+  height: 42px;
+  width: 42px;
+  margin: 13px;
+}
+.hamburger-menu-div {
+  background-color: #2c2c2c;
+  border-radius: 20px;
+  height: 90px;
+  display: flex;
+  width: 98px;
+}
+.model-controls-div {
+  color: White;
+  width: 257px;
+  height: 92px;
+  /* z-index: 999; */
+  position: fixed;
+  background: #1f1f1f;
+  border-radius: 20px;
+  bottom: 100px;
+  left: calc(50% - 180px);
+  padding-top: 3px;
+}
+
+.model-controls-list {
+  background-color: #333333;
+  width: 71px;
+  height: 71px;
+  border-radius: 10px;
+}
+
+.toolbar-list-selection {
+  background-color: #bc264b;
+  width: 71px;
+  height: 71px;
+  border-radius: 10px;
+}
+.model-controls-icons {
+  color: #c0c0c0;
+  width: 45px;
+  height: 44px;
+  margin-top: 13px;
+  margin-left: 13px;
+}
+.model-controls-list:focus {
+  background-color: #bc264b;
+}
+.sidebar-menu-background {
+  background-image: url('../assets/Images/SideBarMenu.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

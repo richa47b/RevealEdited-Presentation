@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <script type="text/javascript" src="./svg.min.js"></script>
+   <style>
+   .drawing_surface {
+    height:550px;
+    width: 550px;
+    margin: auto;
+  }
+  svg{
+    position: relative;
+    width: auto;  }
+  
+  </style>
+</head>
+<body >
+    <div id="drawing" class="drawing_surface" width="300px" height="">
+    <script language="javascript" type="text/javascript">/* create an svg drawing */
+var draw = SVG('drawing')
+
+var total_rows = 8;
+var total_cols = 8;
+var start_x = 0;
+var start_y = 0;
+var square_size = 50;
+var square_gap = 3;
+
+var pacman_size = 30;
+var pacman = draw.circle(pacman_size).attr({cx: 0, cy: 0, fill: "#BC264B"});
+var pacman_row = 3;
+var pacman_col = 3;
+
+
+var goal_text = draw.plain('Goal').font({ size: 12, family: 'Verdana' });
+var goal_row = null;
+var goal_col = null;
+
+
+var current_x = start_x;
+var current_y = start_y
+
+var map = [
+  [0, 0, 0, 0, 0, 1, 0, 0],
+  [0, 1, 1, 1, 1, 1, 1, 0],
+  [0, 1, 0, 0, 0, 0, 1, 0],
+  [0, 1, 0, 1, 0, 1, 1, 0],
+  [0, 1, 0, 1, 0, 0, 1, 0],
+  [0, 1, 0, 1, 0, 1, 1, 0],
+  [0, 1, 1, 1, 1, 1, 1, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0],
+]
+
+var blocks = [
+];
+
+function getCirclePositionInBlock(i, j) {
+  var block_data = blocks[i][j];
+  var diff = block_data.size - pacman_size;
+  diff = diff/2;
+  
+  position = {};
+  position.x = block_data.x + diff;
+  position.y = block_data.y + diff+ 5;
+  
+  return position;
+}
+
+function add_neighbor_if_valid(neighbors, row, col) {
+  if (row < 0 || 
+      col < 0 || 
+      row >= total_rows || 
+      col >= total_cols ||
+      (map[row][col] === 0)) {
+    return;
+  }
+  
+  neighbors.push({row: row, col: col})
+        
+  
+}
+
+function get_valid_neighbors(row, col) {
+  var neighbors = [];
+  
+  add_neighbor_if_valid(neighbors, row-1, col);
+  add_neighbor_if_valid(neighbors, row+1, col);
+  
+  add_neighbor_if_valid(neighbors, row, col-1);
+  add_neighbor_if_valid(neighbors, row, col+1);
+  
+  return neighbors;
+}
+
+function movePacmanToNewGoal() {
+  // First we calculate Path
+
+  var distances = [
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [-1, -1, -1, -1, -1, -1, -1, -1]
+  ]
+  
+  // Set Goal Row distance to 0
+  distances[goal_row][goal_col] = 0;
+  
+  var queue = [];
+  queue.push({row: goal_row, col: goal_col});
+  found = false;
+  
+  
+  var __ed_loopvar2 = Date.now();
+while (!found && queue.length !== 0) {
+if (Date.now() - __ed_loopvar2 > 3000) { document.body.innerHTML = "Infinite Loop Detected!"; throw new Error("Infinite loop"); break;}
+
+    var block = queue.shift();
+    var row = block.row;
+    var col = block.col;
+    
+    // Get Neighbors
+    var neighbors = get_valid_neighbors(row, col);
+    var my_distance = distances[row][col];
+    
+    var __ed_loopvar1 = Date.now();
+for (var i = 0; i < neighbors.length; i++) {
+if (Date.now() - __ed_loopvar1 > 3000) { document.body.innerHTML = "Infinite Loop Detected!"; throw new Error("Infinite loop"); break;}
+
+      var neighbor = neighbors[i];
+      if (distances[neighbor.row][neighbor.col] >= 0) {
+        continue;
+      }
+      
+      distances[neighbor.row][neighbor.col] = my_distance + 1;
+      if (pacman_row == neighbor.row && pacman_col == neighbor.col) {
+        found = true;
+        break;
+      }
+      
+      queue.push(neighbor);
+    }
+  }
+  
+  // Now Start from the Source and animate
+  function animatePacmanToGoal() {
+    var row = pacman_row;
+    var col = pacman_col;
+    
+    if (pacman_row == goal_row && pacman_col == goal_col) {
+      return;
+    }
+    
+    var current_distance = distances[row][col];
+    var neighbors = get_valid_neighbors(row, col);
+    
+    var next_row = null;
+    var next_col = null;
+    var min_distance = 100000;
+    
+    var __ed_loopvar3 = Date.now();
+for (var i = 0; i < neighbors.length; i++) {
+if (Date.now() - __ed_loopvar3 > 3000) { document.body.innerHTML = "Infinite Loop Detected!"; throw new Error("Infinite loop"); break;}
+
+      distance = distances[neighbors[i].row][neighbors[i].col];
+      if (distance < 0) {
+        continue;
+      }
+      if (distance < min_distance) {
+        next_row = neighbors[i].row;
+    	next_col = neighbors[i].col;
+        min_distance = distance;
+      }
+    }
+    
+    var position = getCirclePositionInBlock(next_row, next_col);
+    pacman.animate(150).move(position.x, position.y).after(function() {
+    	pacman_row = next_row;
+      	pacman_col = next_col;
+        
+        animatePacmanToGoal();
+    });
+  }
+  
+  pacman.stop();
+  animatePacmanToGoal();
+  
+}
+
+function markCellAsGoal(row, col) {
+  if (goal_row != null && goal_col != null) {
+    var old_goal = blocks[goal_row][goal_col];
+    old_goal.svg_object.attr({fill: "#ffffff"});
+  }
+  
+  goal_row = row;
+  goal_col = col;
+  
+  var new_goal = blocks[goal_row][goal_col];
+  new_goal.svg_object.attr({fill: "#C3C3C3"});
+  
+  goal_text.move(new_goal.x + 10, new_goal.y);
+  goal_text.front();
+}
+
+function handleBlockClicked(block_clicked) {
+  console.log(block_clicked.row_index, block_clicked.col_index);
+  markCellAsGoal(block_clicked.row_index, block_clicked.col_index);
+  movePacmanToNewGoal();
+}
+
+var current_x = start_x;
+var current_y = start_y
+
+var __ed_loopvar5 = Date.now();
+for (var i = 0; i < total_rows; i++) {
+if (Date.now() - __ed_loopvar5 > 3000) { document.body.innerHTML = "Infinite Loop Detected!"; throw new Error("Infinite loop"); break;}
+
+  current_x = start_x;
+  blocks.push([]);
+  block_row = blocks[i];
+  var __ed_loopvar4 = Date.now();
+for (var j = 0; j < total_cols; j++) {
+if (Date.now() - __ed_loopvar4 > 3000) { document.body.innerHTML = "Infinite Loop Detected!"; throw new Error("Infinite loop"); break;}
+
+	var color = "#ffffff"
+    if (map[i][j] === 0) {
+      color = "#3c3c3c";
+    }
+    
+    block_row.push({});
+    block_data = block_row[j];
+    
+    var block = draw.rect(square_size, square_size).attr({ x: current_x, y: current_y, fill: color});
+	block.radius(5);
+    
+    block.row_index = i;
+    block.col_index = j;
+    block_data.row_index = i;
+    block_data.col_index = j;
+    block_data.x = current_x;
+    block_data.y = current_y;
+    block_data.size = square_size;
+    block_data.svg_object = block;
+    
+    if (map[i][j] === 1) {
+      block.click(function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          handleBlockClicked(this);
+        });
+    }
+    
+    current_x += square_size + square_gap;
+     
+  }
+  
+  current_y += square_size + square_gap;
+}
+
+var position = getCirclePositionInBlock(pacman_row, pacman_col);
+pacman.front();
+pacman.move(position.x, position.y);
+
+markCellAsGoal(pacman_row, pacman_col);
+
+draw.viewbox(0, 0, draw.bbox().width+400, draw.bbox().height);;
+
+</script>
+
+    </div>
+</body>
+</html>

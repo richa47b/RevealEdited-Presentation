@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=*no*"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.js"></script>
+    <script defer src="https://unpkg.com/konva@9/konva.min.js"></script>
+    <link
+      href="/ciechanow.ski_ice_simple_assembly/internal-combustion-engine/css/base.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:700&display=swap"
+      rel="stylesheet"
+      type="text/css"
+      async
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,500&display=swap"
+      rel="stylesheet"
+      async
+    />
+    <title>Internal Combustion Engine – Bartosz Ciechanowski</title>
+    <link
+      href="/ciechanow.ski_ice_simple_assembly/internal-combustion-engine/css/ice.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      defer
+      src="/ciechanow.ski_ice_simple_assembly/internal-combustion-engine/js/base.js"
+    ></script>
+    <script
+      defer
+      src="/ciechanow.ski_ice_simple_assembly/internal-combustion-engine/js/ice.js"
+    ></script>
+  </head>
+
+  <body>
+    <div class="cursor2" id="cursorinner" style="z-index: 9999"></div>
+    <canvas
+      id="can"
+      class="can"
+      height="800px"
+      width="1600px"
+      style="top: 100px; left: 120px"
+    ></canvas>
+    <div id="main_container">
+      <div id="body">
+        <div id="content">
+          <div class="article">
+            <div class="padding_wrapper">
+              <div id="ice_simple_assembly_slider">
+                <div class="drawer_container" id="ice_simple_assembly"></div>
+                <div
+                  id="ice_simple_assembly_sl0"
+                  style="
+                    bottom: 40%;
+                    left: 50%;
+                    transform: translate(-50%, -23%);
+                    width: 400px;
+                    position: absolute;
+                  "
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="footer"></div>
+    </div>
+  </body>
+  <script>
+    let borderToggleEvent = new CustomEvent('borderToggle', { detail: true })
+    // window.parent.document.dispatchEvent(borderToggleEvent)
+
+    var divRemoved = { divRemoved: 'true' }
+    var event = new CustomEvent('divRemoved', { detail: divRemoved })
+    window.parent.document.dispatchEvent(event)
+    window.onkeydown = (e) => {
+      let borderToggleEvent = new CustomEvent('borderToggle', {
+        detail: true,
+      })
+      window.parent.document.dispatchEvent(borderToggleEvent)
+      if (e.keyCode == 166 || e.keyCode == 27) {
+        e.preventDefault()
+        e = window
+        while (e.frameElement !== null) {
+          e = e.parent
+        }
+        e.parent.focus()
+
+        let borderToggleEvent = new CustomEvent('borderToggle', {
+          detail: false,
+        })
+        window.parent.document.dispatchEvent(borderToggleEvent)
+      }
+    }
+    window.addEventListener('click', function (event) {
+      let borderToggleEvent = new CustomEvent('borderToggle', {
+        detail: true,
+      })
+      window.parent.document.dispatchEvent(borderToggleEvent)
+    })
+  </script>
+  <script src="./js/fabric.js"></script>
+  <script>
+    let can = document.getElementById('can')
+    can.parentElement.style.position = 'absolute'
+    can.parentElement.childNodes.forEach((e) => {
+      e.style = `position:absolute;
+      left:250px;
+      height:800px;
+      width:1200px;
+      `
+    })
+  </script>
+  <link
+    href="/ciechanow.ski_ice_hero/internal-combustion-engine/css/Cursor.css"
+    rel="stylesheet"
+  />
+  <script>
+    var cursorI = document.getElementById('cursorinner')
+    let localBody = document.getElementById('main_container')
+
+    document.body.onmouseenter = (e) => {
+      const mouseEnteredInChild = { mouseEnteredInChild: 'true' }
+      const eventForMouseEnteredInChild = new CustomEvent(
+        'mouseEnteredInChild',
+        { detail: mouseEnteredInChild }
+      )
+      window.parent.document.dispatchEvent(eventForMouseEnteredInChild)
+      cursorI.style.display = 'block'
+    }
+
+    document.body.onmouseleave = () => {
+      const mouseEnteredInChild = { mouseEnteredInChild: 'false' }
+      const eventForMouseEnteredInChild = new CustomEvent(
+        'mouseEnteredInChild',
+        { detail: mouseEnteredInChild }
+      )
+      window.parent.document.dispatchEvent(eventForMouseEnteredInChild)
+      cursorI.style.display = 'none'
+    }
+
+    document.addEventListener('mousemove', function (e) {
+      var x = e.clientX
+      var y = e.clientY
+      cursorI.style.left = x + 'px'
+      cursorI.style.top = y + 'px'
+    })
+
+    document.addEventListener('mousedown', function () {
+      cursorI.classList.add('cursorinnerhover')
+    })
+
+    document.addEventListener('mouseup', function () {
+      cursorI.classList.remove('cursorinnerhover')
+    })
+  </script>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>math.js | plot</title>
+  <script src="https://unpkg.com/mathjs@11.6.0/lib/browser/math.js"></script>
+
+  <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+
+  <style>
+    input[type=text] {
+      width: 300px;
+      color:  rgb(195,195,195);
+    }
+    input {
+      padding: 5px;
+    }
+    body, html, input {
+      font-family: sans-serif;
+      font-size: 11pt;
+      background-color: rgb(36,36,36);
+    }
+    #text{
+      font-size: 20px;
+      margin-right: 10px;
+      color: rgb(195,195,195);
+    }
+    form {
+      margin: 10vh 5vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(36,36,36);
+    }
+    #btn{
+      width: 75px;
+      height: 32px;
+      margin-left: 0px;
+      offset: unset;
+      background-color: rgb(188,38,75);
+     
+    }
+    .svg-container{
+      margin:25vh auto;
+    }
+  </style>
+</head>
+<body>
+
+
+
+<div id="plot"></div>
+<form id="form">
+  <p for="eq" id="text">Enter an equation:</p>
+  <input type="text" id="eq" value="" />
+  <input type="submit" id="btn" value="Draw" />
+</form>
+<script>
+  function draw() {
+    // stroke(36,36,36)
+    try {
+      // compile the expression once
+      const expression = document.getElementById('eq').value
+      const expr = math.compile(expression)
+
+      // evaluate the expression repeatedly for different values of x
+      const xValues = math.range(-100, 100, 0.5).toArray()
+      const yValues = xValues.map(function (x) {
+        return expr.evaluate({x: x})
+      })
+
+      // render the plot using plotly
+      const trace1 = {
+        x: xValues,
+        y: yValues,
+        type: 'scatter'
+      }
+      data.push(trace1);
+      plot(data);
+    }
+    catch (err) {
+      console.error(err)
+      alert(err)
+    }
+  }
+  const data = [];
+  function plot(data){
+    Plotly.newPlot('plot', data)
+  }
+
+  document.getElementById('form').onsubmit = function (event) {
+    event.preventDefault()
+    draw()
+  }
+
+  draw()
+</script>
+
+</body>
+</html>

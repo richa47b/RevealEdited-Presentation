@@ -1,0 +1,24 @@
+#radioA > div{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    margin-top: 25px;
+}
+input[type='radio']{
+    height: 40px;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 100px;
+}
+input[type='radio']:active{
+    border: 6px solid black;
+    outline: unset !important;
+    justify-content: center;
+}
+label{
+    font-size: 25px;
+    justify-content: center;
+    align-items: center;
+    margin: 7px;
+}

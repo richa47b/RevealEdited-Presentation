@@ -1,0 +1,98 @@
+.box {
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  left: 95px;
+}
+
+.container-2 {
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+
+.container-2 input#search {
+  width: 70px;
+  height: 68px;
+  background-color: #333333;
+  /* background: #2b303b; */
+  border: none;
+  font-size: 10px;
+  float: left;
+  /* color: #262626; */
+  padding-left: 35px;
+  border-radius: 5px;
+  color: #fff;
+  transition: width 0.55s ease;
+}
+
+.container-2 .icon {
+  position: absolute;
+  margin: 13px;
+  z-index: 1;
+  /* color: #ffff !important; */
+}
+
+.animationSearchBox {
+  outline: none;
+  width: 84vw !important;
+  -webkit-box-shadow: 0 0 10px rgba(188, 38, 75, 67%);
+  -moz-box-shadow: 0 0 10px rgba(188, 38, 75, 67%);
+  box-shadow: 0 0 10px rgba(188, 38, 75, 67%);
+
+  background-image: linear-gradient(to right, #222222, #363636);
+}
+
+.container-2:hover .icon {
+  color: #fff;
+}
+.openai-resultDiv {
+  height: 100%;
+  color: #c0c0c0;
+  font-size: 30px;
+  background: rgb(48, 48, 48, 0.8);
+}
+
+.dropdown-content {
+  background-color: rgb(48, 48, 48, 100%);
+  width: 100%;
+  margin-bottom: -31px;
+  position: fixed;
+  inset: auto auto 0px 0px;
+  transform: translate3d(0px, -135px, 0px);
+}
+
+.hoverable-icons {
+  width: 200px;
+  height: 90px;
+  position: absolute;
+  /* color: #bc264b; */
+}
+.hoverable-icons:hover .hidden-icons {
+  display: block;
+}
+
+.dropdown::-webkit-scrollbar {
+  display: none;
+}
+.dropdown {
+  background-color: #313131;
+  position: absolute;
+  z-index: 9;
+  width: 100%;
+}
+#search::placeholder {
+  font-weight: bold;
+  font-size: 10px;
+  margin-left: 100px;
+}
+
+#search {
+  text-indent: 20px;
+}
+
+.bottomNavDiv :focus-visible {
+  outline: transparent !important;
+}

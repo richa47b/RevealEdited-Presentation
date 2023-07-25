@@ -1,0 +1,92 @@
+html, body {
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    font-size: 24px;
+}
+
+#nav-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 128px;
+}
+
+#container {
+    display: flex;
+
+    /* This centers our sketch horizontally. */
+    justify-content: center;
+
+    /* This centers our sketch vertically. */
+    align-items: center;
+}
+
+#no{
+    all:unset;
+    height: 25px;
+    width: 75px;
+    margin: auto;
+    font-size: large;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 15px;
+    background-color: rgb(210, 210, 210);
+}
+#autostart{
+    width: 35px;
+    height: 35px;
+}
+
+.nav-bar-button-item {
+    text-align: center;
+
+    display: inline-block;
+    font-size: 24px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    background-color: white;
+    color: black;
+    padding: 3px 5px;
+    border: 2px solid #555555;
+    border-radius: 15px;
+    box-shadow: 3px 3px 2px 1.5px rgb(188, 188, 188);
+    margin-right: 5px;
+}
+
+.nav-bar-button-item:hover {
+    background-color:rgb(91, 215, 249);
+    color:black;
+    margin-top: 12px;
+}
+.nav-bar-button-item:active{
+   transform: translate(3px ,3px);
+   box-shadow: none;
+}
+
+.nav-bar-select {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+    font-size: 24px;
+}
+
+.nav-bar.nav-bar-select-item {
+    font-size: 24px;
+}
+
+.select-text {
+    color: #555555;
+    font-size: 24px;
+}
+
+#codeblock{
+    position: absolute;
+    top: 35%;
+    right: 5px;
+}
+
+.code{
+    padding: 15px;
+    margin: auto;
+}

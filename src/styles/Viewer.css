@@ -1,0 +1,16 @@
+.threeDmodel-viewer {
+  pointer-events: all;
+  width: 80%;
+}
+
+.gltf-model {
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -15%) scale(1);
+}
+
+.human-anatomy-model {
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -20%) scale(1);
+}

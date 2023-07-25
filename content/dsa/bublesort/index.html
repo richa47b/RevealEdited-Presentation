@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=*yes*">
+    <title>Sorting Visualization</title>
+    <link rel="stylesheet" type="text/css" href="src/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <!-- Bootstrap link -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    </style>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="src/array.js"></script>
+    <script src="src/sketch.js"></script>
+    <script src="src/sort.js"></script>
+    <style>
+        .btn-outline-danger{
+          background-color:#3c3c3c;
+          border: 2px solid #c0c0c0;
+          color: #c0c0c0;
+        }
+        .btn-outline-danger:active{
+          background-color:#3c3c3c;
+          border: 2px solid  #BC264B;
+         
+        }
+      body {
+        background-color: #242424;
+      }
+      #codeblock {
+        margin: auto;
+        position: absolute;
+        padding-top: 18px;
+        padding-left: 28px;
+        border-radius: 20px;
+        color: #c0c0c0;
+        background-color: #333333;
+        width: 450px;
+        height: 80%;
+      }
+      #codedata{
+        margin-bottom: 5px;
+    border-radius: 20px;
+    height: 70px;
+    background-color: #242424;
+    padding: 20px;
+    width: 95%;
+    height: 25%;
+      }
+      #codedisplay
+      {
+        min-height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cursor2" id="cursorinner" style="z-index:9999"></div>
+    <div>
+      <div class="row">
+        <div class="col">
+          <div
+            id="my_dataviz"
+            style="
+              width: 750px;
+              stroke: 000000;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          ></div>
+        </div>
+        <div class="col">
+          <div id="codeblock" style="color: #c0c0c0">
+            <div id="codedata">
+              <h4>   Let's Begin the Algorithm..</h4>
+           
+            </div>
+            <div id="codedisplay" >
+              <div>
+                <h4 class="code" style="color: #c0c0c0" id="code1">
+                  repeat (numOfElements - 1) times
+                </h4>
+                <h4 class="code" style="color: #c0c0c0" id="code2">
+                  set the first unsorted element as the minimum
+                </h4>
+                <h4 class="code" style="color: #c0c0c0" id="code3">
+                  for each of the unsorted elements
+                </h4>
+                <h4
+                  class="code"
+                  style="padding-left: 30px; color: #c0c0c0"
+                  id="code4"
+                >
+                  if element < currentMinimum
+                </h4>
+                <h4
+                  class="code"
+                  style="padding-left: 50px; color: #c0c0c0"
+                  id="code5"
+                >
+                  set element as new minimum
+                </h4>
+                <h4
+                  class="code"
+                  id="code6"
+                  style="padding-left: 30px; color: #c0c0c0"
+                >
+                  swap minimum with first unsorted position
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div id="input">
+      <label for="input-text" class="input-label" class="text-light">Input : </label>
+      <input type="text" value="" id="input-text" disabled>
+    </div>
+    <div id="divison" class="text-center">
+      <div>
+        <form action="index.html" method="get">
+          <label for="alg-select" class="input-label select-text " style="display: none;">Algorithm:</label>
+          <select id="alg-select" class="nav-bar-select" onchange="change()" style="display: none;">
+            <option value="selectionSort">Selection Sort</option>
+            <option value="bubbleSort" id="option">Bubble Sort</option>
+            <option value="insertionSort">Insertion Sort</option>
+          </select>
+          <!-- <div style="display: flex; width: 250px;">
+          <label for="no" class="select-text input-label">Element Count:</label>
+          <input id="no" type="number" name="" min="6" max="36" />
+          <button id="submit" type="submit" onclick="submit1()">Select</button>
+          </div> -->
+        </form>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <button type="button" class="btn btn-outline-danger btn-lg" id="count">
+            Step: 0/0
+          </button>
+        </div>
+        <div class="col controls-btns mt-3 " style="width: 20px; border: 1 px solid white !important;display: flex;">
+          <i class="fa-solid fa-backward fa-xl" style="color: #f2f2f3; padding: 20px; font-size: 35px;" id="prev" onclick="prev()"></i>
+          <i class="fa-sharp fa-solid fa-pause fa-xl" style="color: #f2f2f3; display:none; padding: 20px; font-size: 35px;" id="stop-button" onclick="stop()" ></i>
+          <i class="fa-sharp fa-solid fa-play fa-xl" style="color: #f2f2f3; display: inline-flex; font-size: 35px; padding: 20px;" id="stop-button" onclick="stop()" ></i>
+          <i class="fa-solid fa-forward fa-xl" style="color: #f2f2f3; font-size: 35px; padding: 20px;"  id="next" onclick="next()" src="fastforward.png" alt="fast forward" ></i> 
+        </div>
+        
+     
+        <div class="col">
+          <span
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-right: 15px;
+            "
+          >
+            <label for="auto" class="input-label" >Auto-Play</label>
+            <input
+              type="checkbox"
+              name="Auto-Start"
+              id="autostart"
+              onchange="stop()"
+            />
+          </span>
+        </div>
+      </div>
+      <div>
+        <button
+          id="start-button"
+          class="btn btn-outline-danger btn-lg"
+          onclick="location.reload();"
+        >
+          Shuffle
+        </button>
+        <!-- <button
+          id="stop-button"
+          class="btn btn-outline-danger btn-lg"
+          onclick="stop()"
+        >
+          Stop
+        </button> -->
+        <button
+          id="sorted-button"
+          class="btn btn-outline-danger btn-lg"
+          onclick="sorted()"
+        >
+          Sorted
+        </button>
+        <button
+          id="reversed-button"
+          class="btn btn-outline-danger btn-lg"
+          onclick="reverse()"
+        >
+          Reversed
+        </button>
+        <button
+          id="reset-button"
+          class="btn btn-outline-danger btn-lg"
+          onclick="reset()"
+        >
+          Reset
+        </button>
+        <button
+          id="help-button"
+          class="btn btn-outline-danger btn-lg"
+          onclick="help()"
+        >
+          Help
+        </button>
+      </div>
+    </div>
+
+    <!-- <script>
+        function submit1(){
+            let temp=location.href;
+            temp=temp.split("=");
+            temp=temp[1];
+            arr = randomArray(temp, 5, 50);
+            allArr = [];
+            checkbox.checked()
+            count=0;
+            calculateArray(arrayExt(arr));
+            callSortFunction("bubbleSort")
+      } -->
+    <!-- </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-timer@3"></script>
+    <script>
+      let checkbox = document.getElementById("autostart");
+      let counter = document.getElementById("count");
+      let playButton = document.getElementsByClassName("fa-play");
+      let stopButton= document.getElementsByClassName("fa-pause");
+      let option = document.getElementById("alg-select");
+      //   let sortname=option.value;
+      let i = 0;
+      let manualstate = true;
+      var sumElapsed = 0;
+      var count = 0;
+      let barPadding = 1;
+      //  elementCount=8;
+      input=document.getElementById("input-text");
+      temp1=input_value(arr);
+      input.value=temp1
+
+      let allBtn=document.getElementById("divison");
+      allBtn.tabIndex=0;
+
+      let code1 = document.getElementById("code1");
+      let code2 = document.getElementById("code2");
+      let code3 = document.getElementById("code3");
+      let code4 = document.getElementById("code4");
+      let code5 = document.getElementById("code5");
+      let code6 = document.getElementById("code6");
+
+      //   function submit1(){
+      //         let temp=location.href;
+      //         temp=temp.split("=");
+      //         temp=temp[1];
+      //         arr = randomArray(temp, 5, 50);
+      //         allArr = [];
+      //         count=0;
+      //         calculateArray(arrayExt(arr));
+      //         callSortFunction("bubbleSort")
+      //         startTimer();
+      //   }
+
+      // var divRemoved = { divRemoved: 'true' }
+      //   var event = new CustomEvent('divRemoved', { detail: divRemoved })
+      //   window.parent.document.dispatchEvent(event)
+
+      let borderToggleEvent = new CustomEvent('borderToggle', {
+          detail: true,
+        })
+
+      window.addEventListener('click', function (event) {
+          let borderToggleEvent = new CustomEvent('borderToggle', {
+            detail: true,
+          })
+          window.parent.document.dispatchEvent(borderToggleEvent)
+        })
+        
+      window.onkeydown=(e)=>{
+        let borderToggleEvent = new CustomEvent('borderToggle', {
+            detail: true,
+          })
+          window.parent.document.dispatchEvent(borderToggleEvent)
+        if (e.keyCode == 166 || e.keyCode == 27) {
+          e.preventDefault();
+          e = window;
+          while (e.frameElement !== null) {
+            e = e.parent;
+          }
+          e.parent.focus();
+          let borderToggleEvent = new CustomEvent('borderToggle', {
+            detail: false,
+          })
+          window.parent.document.dispatchEvent(borderToggleEvent)
+      }
+      // console.log(e, "fff");
+      e.preventDefault();
+        if(e.key=="ArrowRight")next()
+        if(e.key=="ArrowLeft")prev()
+
+      }
+
+      
+
+
+      function change() {
+        stop();
+        count = 0;
+        displaycode(option.value);
+        checkbox.checked = false;
+        reset();
+        arr = randomArray(elementCount=8, 5, 50);
+
+        let temp=[];
+        arr.forEach(element => {
+          temp.push(element.value);
+        });
+        input.value=temp  ;
+
+        allArr = [];
+        count = 0;
+        calculateArray(arrayExt(arr));
+        callSortFunction(option.value);
+        count = 0;
+        setupScene(allArr[0]);
+        updateBar(count, 0);
+      }
+      callSortFunction(option.value);
+      setupScene(allArr[0]);
+      var svg, x, y;
+
+      function setupScene(dataset) {
+        d3.select("svg").remove();
+        // set the dimensions and margins of the graph
+        const margin = { top: 30, right: 30, bottom: 70, left: 30 },
+          width = 800 - margin.left - margin.right,
+          height = 350 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        svg = d3
+          .select("#my_dataviz")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        x = d3
+          .scaleBand()
+          .range([0, width])
+          .domain(
+            dataset.map(function (d, i) {
+              return  d.value + "";
+            })
+          )
+          .padding(0.2);
+
+        // Add Y axis
+        y = d3
+          .scaleLinear()
+          .domain([
+            0,
+            d3.max(dataset, (d) => {
+              return +d.value;
+            }),
+          ])
+          .range([height, 0]);
+        // Bars
+        bars = svg.selectAll("g").data(dataset).enter().append("g");
+
+        bars
+          .append("rect")
+          .attr("id", function (d, i) {
+            return "bar" + i;
+          })
+          .attr("class", "mybar")
+          .attr("x", (d,i) => x(d.value+""))
+          .attr("y", function (d, i) {
+            return y(+d.value);
+          })
+
+          .attr("width", x.bandwidth())
+          .attr("height", (d) => height - y(d.value))
+          .attr("fill", function (d, i) {
+            return d.endstate
+              ? "#d9d9d9"
+              : d.currentstate
+              ? "#bc264c"
+              : d.minimumstate
+              ? "#ff92ab"
+              : "#767676";
+          });
+
+        bars
+          .append("text")
+          .text(function (d) {
+            return d.value;
+          })
+          .attr("text-anchor", "middle")
+          .attr("x", (d,i) => x(d.value+"") + x.bandwidth() / 2)
+          .attr("y", function (d) {
+            return y(+d.value) - 10;
+          })
+          .attr("font-family", "sans-serif")
+          .attr("font-size", "20px")
+          .attr("fill", "#C0C0C0");
+      }
+      function updateBar(index, duration) {
+        resetcolor(option.value);
+        codecolor(allArr[index][0].currentposition, option.value);
+
+        if (index >= allArr.length - 1) {
+          index = allArr.length - 2;
+          updateBar(index, 0);
+          // timerForAutoPlay.stop();
+          checkbox.checked = false;
+          return;
+        } else {
+          svg
+            .selectAll("rect")
+            .data(allArr[index])
+            .transition()
+            .duration(duration)
+            .attr("x", function (d,i) {
+              return x(d.value+"");
+              // count++;
+            })
+            .on("end", function (d, i) {
+              setupScene(allArr[index]);
+            });
+
+          svg
+            .selectAll("text")
+            .data(allArr[index])
+            .transition()
+            .duration(duration)
+            .attr("x", function (d,i) {
+              return x(d.value+"") + x.bandwidth() / 2;
+            });
+          counter.innerHTML = `Step: ${count}/${allArr.length - 1}`;
+        }
+      }
+
+      var timerForAutoPlay;
+      function startTimer() {
+        timerForAutoPlay = d3.timer((elapsed) => {
+          if (count >= allArr.length - 1) {
+            timerForAutoPlay.stop();
+          } else if (elapsed > sumElapsed) {
+            updateBar(count++, 750);
+            arr = allArr[count];
+
+            sumElapsed += 1000;
+          }
+        });
+      }
+      function reset() {
+        count = 0;
+        sumElapsed = 0;
+        updateBar(count, 0);
+        // startTimer();
+      }
+      // function start() {
+      //   checkbox.checked = true;
+      //   startTimer();
+      // }
+      function stop() {
+          if (stopButton[0].style.display != "none" || count == allArr.length - 1) {
+            try {
+              timerForAutoPlay.stop(); 
+            } catch (error) { 
+              console.log(error);
+            }
+            checkbox.checked = false;
+            stopButton[0].style.display="none";
+            playButton[0].style.display="inline-flex";
+
+          } else if (playButton[0].style.display != "none" || count == allArr.length - 1) {
+            sumElapsed = 0;
+            checkbox.checked = true;
+            startTimer();
+            stopButton[0].style.display="inline-flex";
+            playButton[0].style.display="none";
+          }
+        }
+
+
+      function sorted() {
+        stop();
+        count = 0;
+        displaycode(option.value);
+        checkbox.checked = false;
+        reset();
+        arr = sortedrandomArray(8)
+
+        let temp=[];
+        arr.forEach(element => {
+          temp.push(element.value);
+        });
+        input.value=temp  ;
+
+        allArr = [];
+        count=0;
+        calculateArray(arrayExt(arr));
+        callSortFunction(option.value);
+        count = 0;
+        setupScene(allArr[0]);
+        updateBar(count, 0);
+        // count = allArr.length - 1;
+        temp = 0;
+        updateBar(temp, 0);
+      }
+      function reverse() {
+        arr = reverserandomArray(elementCount=8, 5, 50);
+
+        let temp=[];
+        arr.forEach(element => {
+          temp.push(element.value);
+        });
+        input.value=temp  ;
+
+        allArr = [];
+        count = 0;
+        calculateArray(arrayExt(arr));
+        callSortFunction(option.value);
+        updateBar(count, 0);
+      }
+      function prev() {
+        if (count > 0) {
+          count--;
+          updateBar(count, 150);
+        }
+      }
+      function next() {
+        if (count < allArr.length) {
+          count++;
+          updateBar(count, 150);
+        }
+      }
+      function help() {
+        alert(`        Start--> For starting the animation.
+        Stop-> To stop the Animation
+        Sorted-> to See sorte Graph
+        Reversed--> To see Worst Complexity of code
+        Reser-> To reset the Array`);
+      }
+
+      // function shuffle(){
+      //     reset();
+      //     shuffleArray(allArr[0]);
+      //     count=0;
+      //     calculateArray(arrayExt(arr));
+      //     allArr = [];
+      //     callSortFunction(option.value);
+      //     updateBar(count,0);
+      // }
+    </script>
+    <link
+    href="src/Cursor.css"
+    rel="stylesheet"
+    />
+    <script>
+      var cursorI = document.getElementById("cursorinner");
+      let localBody = document.getElementById("main_container");
+  
+      document.body.onmouseenter = (e) => {
+        const mouseEnteredInChild = { mouseEnteredInChild: "true" };
+        const eventForMouseEnteredInChild = new CustomEvent(
+          "mouseEnteredInChild",
+          { detail: mouseEnteredInChild }
+        );
+        window.parent.document.dispatchEvent(eventForMouseEnteredInChild);
+        cursorI.style.display = "block";
+      };
+  
+      document.body.onmouseleave = () => {
+        const mouseEnteredInChild = { mouseEnteredInChild: "false" };
+        const eventForMouseEnteredInChild = new CustomEvent(
+          "mouseEnteredInChild",
+          { detail: mouseEnteredInChild }
+        );
+        window.parent.document.dispatchEvent(eventForMouseEnteredInChild);
+        cursorI.style.display = "none";
+      };
+  
+      document.addEventListener("mousemove", function (e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        cursorI.style.left = x + "px";
+        cursorI.style.top = y + "px";
+      });
+  
+      document.addEventListener("mousedown", function () {
+        cursorI.classList.add("cursorinnerhover");
+      });
+  
+      document.addEventListener("mouseup", function () {
+        cursorI.classList.remove("cursorinnerhover");
+      });
+    </script>
+       <!-- <script> -->
+        // let borderToggleEvent = new CustomEvent('borderToggle', {
+          // detail: true,
+        // })
+
+        // var divRemoved = { divRemoved: 'true' }
+        // var event = new CustomEvent('divRemoved', { detail: divRemoved })
+        // window.parent.document.dispatchEvent(event)
+        // window.onkeydown = (e) => {
+        //   if (e.keyCode == 166) {
+        //     e.preventDefault()
+        //     e = window
+        //     while (e.frameElement !== null) {
+        //       e = e.parent
+        //     }
+        //     e.parent.focus()
+
+        //     let borderToggleEvent = new CustomEvent('borderToggle', {
+        //       detail: false,
+        //     })
+        //     window.parent.document.dispatchEvent(borderToggleEvent)
+        //   }
+
+          // if (e.key == 'ArrowRight' || e.key == 'ArrowLeft') {
+          //   e.preventDefault()
+          //   document.getElementsByClassName('play_pause_button')[0].click()
+          //   let borderToggleEvent = new CustomEvent('borderToggle', {
+          //     detail: true,
+          //   })
+          //   window.parent.document.dispatchEvent(borderToggleEvent)
+          // }
+        // }
+        // window.addEventListener('click', function (event) {
+        //   let borderToggleEvent = new CustomEvent('borderToggle', {
+        //     detail: true,
+        //   })
+        //   window.parent.document.dispatchEvent(borderToggleEvent)
+        // })
+      // </script>
+    
+  </body>
+</html>

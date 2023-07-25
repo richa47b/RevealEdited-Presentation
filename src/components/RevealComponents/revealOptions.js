@@ -1,4 +1,4 @@
-import Reveal from 'reveal.js/js/reveal';
+import Reveal from "reveal.js/js/reveal";
 
 export default {
   // Display presentation control arrows
@@ -9,11 +9,11 @@ export default {
   controlsTutorial: false,
 
   // Determines where controls appear, "edges" or "bottom-right"
-  controlsLayout: 'bottom-right',
+  controlsLayout: "edges",
 
   // Visibility rule for backwards navigation arrows; "faded", "hidden"
   // or "visible"
-  controlsBackArrows: 'faded',
+  controlsBackArrows: "faded",
 
   // Display a presentation progress bar
   progress: true,
@@ -47,7 +47,7 @@ export default {
   rtl: false,
 
   // See https://github.com/hakimel/reveal.js/#navigation-mode
-  navigationMode: 'default',
+  navigationMode: "default",
 
   // Randomizes the order of slides each time the presentation loads
   shuffle: false,
@@ -119,23 +119,23 @@ export default {
   previewLinks: false,
 
   // Transition style
-  transition: 'slide', // none/fade/slide/convex/concave/zoom
+  transition: "slide", // none/fade/slide/convex/concave/zoom
 
   // Transition speed
-  transitionSpeed: 'default', // default/fast/slow
+  transitionSpeed: "default", // default/fast/slow
 
   // Transition style for full page slide backgrounds
-  backgroundTransition: 'fade', // none/fade/slide/convex/concave/zoom
+  backgroundTransition: "fade", // none/fade/slide/convex/concave/zoom
 
   // Number of slides away from the current that are visible
   viewDistance: 2,
 
   // Parallax background image
-  parallaxBackgroundImage: '', // e.g.
+  parallaxBackgroundImage: "", // e.g.
   // "'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg'"
 
   // Parallax background size
-  parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px"
+  parallaxBackgroundSize: "", // CSS syntax, e.g. "2100px 900px"
 
   // Number of pixels to move the parallax background per slide
   // - Calculated automatically unless specified
@@ -144,5 +144,5 @@ export default {
   parallaxBackgroundVertical: null,
 
   // The display mode that will be used to show slides
-  display: 'block',
+  display: "block"
 };

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sorting Visualization</title>
+    <link rel="stylesheet" type="text/css" href="src/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <script src="https://d3js.org/d3.v6.js"></script>
+    <script src="src/array.js"></script>
+    <script src="src/sketch.js"></script>
+    <script src="src/sort.js"></script>
+  </head>
+  <body>
+    <div id="nav-bar" style="display: flex; align-items: center">
+      <div class="nav-bar-alg-selection">
+        <div>
+          <form action="index.html" method="get">
+            <label for="alg-select" class="select-text">Algorithm:</label>
+            <select id="alg-select" class="nav-bar-select" onchange="change()">
+              <option value="selectionSort">Selection Sort</option>
+                <option value="bubbleSort" id="option">Bubble Sort</option>
+                <option value="insertionSort">Insertion Sort</option>
+            </select>
+            <label for="no" class="select-text">Element Count:</label>
+            <input id="no" type="number" name="Number" min="6" max="36" />
+            <button id="submit" type="submit" onclick="submit1()">Select</button>
+          </form>
+        </div>
+      </div>
+      <div>
+        <span
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+          "
+        >
+          <p>Auto-Play</p>
+          <input
+            type="checkbox"
+            name="Auto-Start"
+            id="autostart"
+            onchange="check()"
+          />
+        </span>
+      </div>
+      <div class="nav-bar-button-group" style="display: flex">
+        <button id="start-button" class="nav-bar-button-item" onclick="start()">Start</button>
+        <button id="stop-button" class="nav-bar-button-item" onclick="stop()">Stop</button>
+        <button id="sorted-button" class="nav-bar-button-item" onclick="sorted()">Sorted</button>
+        <button id="reversed-button" class="nav-bar-button-item" onclick="reverse()">
+          Reversed
+        </button>
+        <button id="reset-button" class="nav-bar-button-item" onclick="reset()">Reset</button>
+        <button id="help-button" class="nav-bar-button-item" onclick="help()">Help</button>
+      </div>
+    </div>
+    <div
+      class="nav-bar-button-group"
+      style="
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <h2
+        style="margin-right: 15px;"
+        id="count"
+        class="nav-bar-button-item"
+      >Step: 0/0</h2>
+      <button style="margin-right: 15px" id="prev" class="nav-bar-button-item" onclick="prev()">
+        Previous
+      </button>
+      <button style="margin-right: 15px" id="next" class="nav-bar-button-item" onclick="next()">
+        Next
+      </button>
+    </div>
+    <div
+      id="my_dataviz"
+      style="
+        margin-top: 25px;
+        margin-left: 80px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color:#413135;
+        "
+    ></div>
+    <div id="codeblock" style="top:28%">
+    <div id="codedata" style="margin-bottom: 5px; color:#C0C0C0">Let's Begin the Algorithm..</div>
+    <div id="codedisplay" style="background-color: #272727;">
+        <div style="border: 2px solid black;">
+          <h4 class="code" style="color:#C0C0C0"  id="code1">repeat (numOfElements - 1) times</h4>
+          <h4 class="code" style="color:#C0C0C0" id="code2">set the first unsorted element as the minimum</h4>
+          <h4 class="code" style="color:#C0C0C0" id="code3">for each of the unsorted elements</h4>
+          <h4 class="code" style="padding-left:30px; color:#c0c0c0;" id="code4">if element < currentMinimum</h4>
+          <h4 class="code" style="padding-left:50px; color:#c0c0c0;" id="code5">set element as new minimum</h4>
+          <h4 class="code" id="code6" style="padding-left:30px; color:#c0c0c0;">swap minimum with first unsorted position</h4>
+        </div>
+    </div>
+    </div>
+    <!-- <script>
+        function submit1(){
+            let temp=location.href;
+            temp=temp.split("=");
+            temp=temp[1];
+            arr = randomArray(temp, 5, 50);
+            allArr = [];
+            checkbox.checked()
+            count=0;
+            calculateArray(arrayExt(arr));
+            callSortFunction("bubbleSort")
+      } -->
+    <!-- </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/d3-timer@3"></script>
+    <script>
+      let checkbox = document.getElementById("autostart");
+      let counter=document.getElementById("count");
+      let stopButton=document.getElementById("stop-button");
+      let option=document.getElementById("alg-select");
+    //   let sortname=option.value;
+      let i = 0;
+      let manualstate = true;
+      var sumElapsed = 0;
+      var count = 0;
+      let barPadding=1;
+
+      let code1=document.getElementById("code1");
+      let code2=document.getElementById("code2");
+      let code3=document.getElementById("code3");
+      let code4=document.getElementById("code4");
+      let code5=document.getElementById("code5");
+      let code6=document.getElementById("code6");
+
+    //   function submit1(){
+    //         let temp=location.href;
+    //         temp=temp.split("=");
+    //         temp=temp[1];
+    //         arr = randomArray(temp, 5, 50);
+    //         allArr = [];
+    //         count=0;
+    //         calculateArray(arrayExt(arr));
+    //         callSortFunction("bubbleSort")
+    //         startTimer();
+    //   }
+
+        function change(){
+            stop();
+            count=0;
+            displaycode(option.value);
+            checkbox.checked=false;
+            reset();
+            arr = randomArray(elementCount, 5, 50);
+            allArr=[];
+            count=0;
+            calculateArray(arrayExt(arr));
+            callSortFunction(option.value);
+            count=0;
+            setupScene(allArr[0]);
+            updateBar(count,0)
+        }
+      callSortFunction(option.value);
+      setupScene(allArr[0]);
+      var svg, x, y;
+
+      function setupScene(dataset) {
+        d3.select("svg").remove();
+        // set the dimensions and margins of the graph
+        const margin = { top: 30, right: 30, bottom: 70, left: 60 },
+          width = window.innerWidth / 2 - margin.left - margin.right,
+          height = window.innerHeight / 2 - margin.top - margin.bottom;
+
+        // append the svg object to the body of the page
+        svg = d3
+          .select("#my_dataviz")
+          .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        x = d3
+          .scaleBand()
+          .range([0, width])
+          .domain(
+            dataset.map(function (d, i) {
+              return d.value + "";
+            })
+          )
+          .padding(0.2);
+
+        // Add Y axis
+        y = d3
+          .scaleLinear()
+          .domain([
+            0,
+            d3.max(dataset, (d) => {
+              return +d.value;
+            }),
+          ])
+          .range([height, 0]);
+        // Bars
+        bars= svg.selectAll("g")
+           .data(dataset)
+           .enter()
+           .append("g");
+
+        bars.append("rect")
+          .attr("id", function (d, i) {
+            return "bar" + i;
+          })
+          .attr("class", "mybar")
+          .attr("x", (d) => x(d.value))
+          .attr("y", function (d, i) {
+            return y(+d.value);
+          })
+          
+          .attr("width", x.bandwidth())
+          .attr("height", (d) => height - y(d.value))
+          .attr("fill", function (d, i) {
+            return d.endstate
+              ? "#d9d9d9" 
+              :d.currentstate
+              ? "#bc264c"
+              : d.minimumstate
+              ? '#ff92ab'
+              : "#767676";
+          });
+          
+          bars.append("text")
+           .text(function(d) {                 
+                    return d.value;
+           })
+           .attr("text-anchor", "middle")
+           .attr("x",(d) => x(d.value)+x.bandwidth()/2)
+           .attr("y", function(d) {
+                return y(+d.value)-10;
+           })
+           .attr("font-family", "sans-serif")
+           .attr("font-size", "20px")
+           .attr("fill", "#C0C0C0");
+      }
+      function updateBar(index, duration) {
+
+        resetcolor(option.value);
+        codecolor(allArr[index][0].currentposition,option.value);
+
+        if(index>=allArr.length-1){
+            index=allArr.length-2;
+            updateBar(index,0);
+            // timerForAutoPlay.stop();
+            checkbox.checked=false;
+            return;
+        }else{
+        svg
+          .selectAll("rect")
+          .data(allArr[index])
+          .transition()
+          .duration(duration)
+          .attr("x", function (d) {
+            return x(d.value);
+            // count++;
+          })
+          .on("end", function (d, i) {
+           setupScene(allArr[index]);
+          });
+
+          svg
+          .selectAll("text")
+          .data(allArr[index])
+          .transition()
+          .duration(duration)
+          .attr("x", function (d) {
+            return x(d.value)+x.bandwidth()/2;
+          })
+          counter.innerHTML=`Step: ${count}/${allArr.length-1}`;}
+      }
+
+      var timerForAutoPlay;
+      function startTimer() {
+
+        timerForAutoPlay = d3.timer((elapsed) => {
+            if (count >= allArr.length - 1) {timerForAutoPlay.stop();}
+            else
+            if (elapsed > sumElapsed) {
+                updateBar(count++,750);
+                arr = allArr[count];
+                
+                sumElapsed += 1000;
+            }
+        });
+      }
+    function check() {
+    if (!checkbox.checked && timerForAutoPlay) timerForAutoPlay.stop();
+    if (checkbox.checked) 
+    {
+        sumElapsed=0;
+        startTimer();
+    }
+    
+    }
+    function reset(){
+    count=0;
+    sumElapsed=0;
+    updateBar(count,0)
+    // startTimer();
+    }
+    function start(){
+    checkbox.checked=true;
+    startTimer();
+    }
+    function stop(){
+    if(count!=0 ){
+        if(stopButton.innerText=="Stop" || count==allArr.length-1){
+            timerForAutoPlay.stop();
+            checkbox.checked=false;
+            stopButton.innerText="Play";
+        }
+        else
+        if(stopButton.innerText=="Play") {
+            sumElapsed=0;
+            checkbox.checked=true;
+            startTimer();
+            stopButton.innerText="Stop";
+        }
+    }
+    }
+    function sorted(){
+    count=allArr.length-1;
+    let temp=count
+    updateBar(temp,0);
+    }
+    function reverse(){
+    arr = reverserandomArray(elementCount, 5, 50);
+    allArr = [];
+    count=0;
+    calculateArray(arrayExt(arr));
+    callSortFunction(option.value);
+    updateBar(count,0);
+    }
+    function prev(){
+        if(count>0){
+            count--;
+            updateBar(count,150);
+        }
+    }
+    function next(){
+        if(count<allArr.length){
+            count++;
+            updateBar(count,150)
+        }
+    }
+    function help(){
+        alert(`        Start--> For starting the animation.
+        Stop-> To stop the Animation
+        Sorted-> to See sorte Graph
+        Reversed--> To see Worst Complexity of code
+        Reser-> To reset the Array`)
+    }
+
+
+    // function shuffle(){
+    //     reset();
+    //     shuffleArray(allArr[0]);
+    //     count=0;
+    //     calculateArray(arrayExt(arr));
+    //     allArr = [];
+    //     callSortFunction(option.value);
+    //     updateBar(count,0);
+    // }
+
+    </script>
+  </body>
+</html>
