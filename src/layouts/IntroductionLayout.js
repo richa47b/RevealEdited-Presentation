@@ -3,6 +3,7 @@ import { emitCustomEvent } from "react-custom-events";
 import Slide from "./Slide";
 
 const IntroductionLayout = (props) => {
+  console.log(props.background_url, "IntroductionLayout");
   return (
     <div
       onPointerMove={() => {
@@ -12,7 +13,10 @@ const IntroductionLayout = (props) => {
         emitCustomEvent("toolbarOptions", "static");
       }}
     >
-      <Slide backgroundImage={props.background_url} />
+      <Slide background_url={props.background_url}>
+        {props.heading}
+        {props.text}
+      </Slide>
     </div>
   );
 };
