@@ -144,5 +144,12 @@ export default {
   parallaxBackgroundVertical: null,
 
   // The display mode that will be used to show slides
-  display: "block"
+  display: "block",
+
+  keyboard: {
+    37: () => {},
+    38: () => {},
+    39: () => {},
+    40: () => {}
+  }
 };

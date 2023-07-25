@@ -4,8 +4,9 @@ import FocusLock from "react-focus-lock";
 import { backend_keywords } from "../../store/Constant";
 import { useGlobalState } from "state-pool";
 import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
+import Reveal from "reveal.js";
 
-const SideBar = ({ isOpen, noRefCheck, skipToFunction }) => {
+const SideBar = ({ isOpen, noRefCheck }) => {
   const [backend_keywordsList] = useGlobalState(backend_keywords);
   const [nextIdx, setNextIdx] = useState(0);
   const inputEls = useRef([]);
@@ -40,17 +41,17 @@ const SideBar = ({ isOpen, noRefCheck, skipToFunction }) => {
           {backend_keywordsList &&
             inputEls &&
             backend_keywordsList?.state.map((item, index) => (
-              <ul key={index}>
+              <ul key={index} className="list-unstyle">
                 <li
                   ref={(el) => {
                     backend_keywordsList.length > index
                       ? (inputEls.current[index] = el)
                       : (inputEls.current[index] = el);
                   }}
-                  className="m-3 text-light cursor-pointer selected-option"
+                  className="m-3 text-light cursor-pointer "
                   tabIndex={nextIdx}
                   onClick={() => {
-                    skipToFunction({ slideIndex: item.id, stepIndex: 0 });
+                    Reveal.slide(item.id);
                   }}
                 >
                   {item.Heading}

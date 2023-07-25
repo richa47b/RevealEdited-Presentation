@@ -30,11 +30,7 @@ const OffCanvasMenu = ({ skipToFunction }) => {
           tabIndex={-1}
           className="position-absolute hamburger-icon"
         ></img>
-        <SideBar
-          isOpen={isOpen}
-          noRefCheck={noRefCheck}
-          skipToFunction={skipToFunction}
-        />
+        <SideBar isOpen={isOpen} noRefCheck={noRefCheck} />
       </div>
     </div>
   );

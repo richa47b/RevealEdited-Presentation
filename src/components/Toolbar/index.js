@@ -246,7 +246,7 @@ const ToolBar = () => {
           {ToolsBarOptions.map((item, index) => {
             return (
               <>
-                <Button
+                <div
                   ref={(el) => {
                     ToolsBarOptions.length > index
                       ? (inputEls.current[index] = el)
@@ -262,7 +262,7 @@ const ToolBar = () => {
                     alt=""
                     className="toolbar-icons"
                   ></img>
-                </Button>
+                </div>
                 {index === 0 && (
                   <span className="square border-end vertical-line"></span>
                 )}

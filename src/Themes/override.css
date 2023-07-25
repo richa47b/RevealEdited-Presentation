@@ -24,15 +24,13 @@ p,
 li {
   /* font-family: 'Ubuntu', sans-serif; */
   font-family: 'Open Sans', sans-serif;
-
-  font-size: 36px;
   line-height: 1.5;
   margin: 10px 0;
 }
 
 li::marker {
   /* content: counter(list-item) "› "; */
-  color: #21685c;
+  color: #ffffff;
 }
 
 .App {
@@ -41,10 +39,11 @@ li::marker {
 
 .reveal a {
   color: white;
-  text-decoration: underline;
   font-style: italic;
 }
-
+.reveal a:hover {
+  text-decoration: none;
+}
 .reveal pre {
   width: unset;
   padding-left: 20px;

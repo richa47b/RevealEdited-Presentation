@@ -60,7 +60,7 @@ const InputMapper = (props) => {
   });
   const onKeyUpFrame = (e) => {
     switch (e.keyCode) {
-      case 80: //93
+      case 93: //80
         e.stopImmediatePropagation();
         e.preventDefault();
         if (evtCounterForMenuButton < 2) {
@@ -76,7 +76,7 @@ const InputMapper = (props) => {
   const onKeyUp = (key, e) => {
     // eslint-disable-next-line default-case
     switch (e.keyCode) {
-      case 80: //93
+      case 93: //80
         e.stopImmediatePropagation();
         e.preventDefault();
         if (evtCounterForMenuButton > 10) {
@@ -134,7 +134,7 @@ const InputMapper = (props) => {
         console.log("DETECTSEARCH");
         machine.send("DETECTSEARCH");
         break;
-      case 8: //166
+      case 166: //8
         e.preventDefault();
         console.log("BACK");
         machine.send("BACK");
@@ -145,13 +145,13 @@ const InputMapper = (props) => {
   const onKeyDown = (key, e) => {
     // eslint-disable-next-line default-case
     switch (e.keyCode) {
-      case 80: //93
+      case 93: //80
         e.preventDefault();
         evtCounterForMenuButton++;
         console.log(evtCounterForMenuButton, "evtCounterForMenuButton");
         break;
       case 27:
-      case 8: //166
+      case 166: //8
         e.preventDefault();
         console.log("BACK");
         machine.send("BACK");

@@ -1,11 +1,13 @@
 import { emitCustomEvent } from "react-custom-events";
+import Reveal from "reveal.js";
 
 export const advanceArrow = () => {
-  console.log("advanceArrow");
+  Reveal.next();
   emitCustomEvent("slide-arrow", "advanceArrow");
 };
 export const regressArrow = () => {
   console.log("regressArrow");
+  Reveal.prev();
   emitCustomEvent("slide-arrow", "regressArrow");
 };
 
