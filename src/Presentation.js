@@ -3,8 +3,8 @@ import Deck from "./components/RevealComponents/Deck";
 import Slides from "./pages/Slides";
 import DropdownItems from "./common/SearchInput";
 
-// import './Themes/darcula.css';
-import "reveal.js/css/theme/black.css";
+// import "reveal.js/css/theme/beige.css";
+import "./styles/Black.css";
 import "./Themes/override.css";
 import { Container } from "reactstrap";
 

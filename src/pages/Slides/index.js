@@ -1,6 +1,4 @@
 import React from "react";
-import TitleSlide from "./TitleSlide";
-import ClosingSlides from "./ClosingSlides";
 import AlgoIntroSlide from "./AlgoIntroSlide";
 import AboutSortingSlide from "./AboutSorting";
 import CyclinderSlide from "./Cylinder";
@@ -13,10 +11,10 @@ import PistonSlide from "./PistonSlide";
 import SelectionSortSlide from "./SelectionSortSlide";
 import StrokesSlide from "./StrokesSlide";
 import ValveSlide from "./ValveSlide";
+import Catalogue from "./Catalogue";
 
 export default [
-  <TitleSlide />,
-  <ClosingSlides />,
+  <Catalogue />,
   <IntroICEngineSlide />,
   <ICEngineIntro />,
   <CyclinderSlide />,
