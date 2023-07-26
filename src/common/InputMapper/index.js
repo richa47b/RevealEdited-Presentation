@@ -6,7 +6,6 @@ import { useCustomEventListener } from "react-custom-events";
 import Reveal from "reveal.js";
 
 const InputMapper = (props) => {
-  console.log(props, "props");
   const machine = useStateDesigner(InputState);
   let evtCounterForMenuButton = 0;
   const [selectIframe, setSelectIframe] = useState(false);

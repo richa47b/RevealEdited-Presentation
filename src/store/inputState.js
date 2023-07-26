@@ -53,6 +53,11 @@ export const InputState = createState({
     iframe: {
       onEnter: "selectIframe",
       on: {
+        DETECTSEARCH: { do: "detectSearch" },
+        MISC_MENU: {
+          do: "MenuOpen",
+          to: "menu"
+        },
         TOOLBARTOGGLE: {
           do: ["deSelectIframe", "toolBarFocus"],
           to: "toolbar"
