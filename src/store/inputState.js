@@ -14,7 +14,6 @@ export const InputState = createState({
                 repeat: set interval for running methods
                     onRepeat: set the methods which needs to be run
                     delay: time interval in seconds
-            
             actions: all the methods that needs to be defined
             values: data manipulation
   */
@@ -128,6 +127,5 @@ export const InputState = createState({
       }
     }
   },
-
   actions // See actions folder
 });

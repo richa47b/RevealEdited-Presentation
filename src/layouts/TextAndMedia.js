@@ -2,9 +2,12 @@ import React, { useRef } from "react";
 import { emitCustomEvent } from "react-custom-events";
 import { Col, Row } from "reactstrap";
 import Slide from "./Slide";
+import { InputState } from "../store/inputState";
+import { useStateDesigner } from "@state-designer/react";
 
 const TextAndMedia = (props) => {
   const TextAndMediaRef = useRef(null);
+  const machine = useStateDesigner(InputState);
 
   const IFrame = (src) => {
     const iFrameRefs = useRef(null);
@@ -56,6 +59,7 @@ const TextAndMedia = (props) => {
       }}
       onClick={() => {
         emitCustomEvent("toolbarOptions", "iframe");
+        machine.send("SELECTIFRAME");
       }}
     >
       <Slide>

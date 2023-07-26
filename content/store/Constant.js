@@ -49,7 +49,7 @@ export const backend_keywords = createGlobalstate({
     // },
     {
       id: 2,
-      Heading: "IC Engine​",
+      Heading: "IC Engine",
       Text: "",
       Media_description: " internal combustion engine (ICE)",
       src: IntroductiontoICEngine

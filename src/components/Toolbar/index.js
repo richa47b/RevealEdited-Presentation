@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, List, ListInlineItem } from "reactstrap";
+import { List, ListInlineItem } from "reactstrap";
 import { emitCustomEvent, useCustomEventListener } from "react-custom-events";
 import { globalContext } from "../../store/Constant";
 import { StatesEnum } from "../../store/states";
@@ -30,6 +30,7 @@ const ToolBar = () => {
     }
   });
   useCustomEventListener("toolbarOptions", (data) => {
+    console.log(data, "toolbar ppOptions");
     if (data === "3Dmodel") {
       setMoveRight(true);
     } else {
@@ -229,24 +230,27 @@ const ToolBar = () => {
     }
   ];
 
+  const toolbarReset = () => {
+    setActiveElement("");
+    setisToggledForTransformControls(false);
+    setShowAnnotation(false);
+  };
+
   return (
     <>
       <div className="hoverable ">
         <List
           type="inline"
-          className=" d-flex justify-content-between toolbar mb-0 p-3  "
+          className=" d-flex justify-content-between toolbar mb-0 ps-2 pe-2 pt-2 pe-2 pb-2 "
           id="toolbarFocus"
           onClick={() => {
-            setActiveElement("");
-            setisToggledForTransformControls(false);
-            setShowAnnotation(false);
-            emitCustomEvent("machineEvent", "TOOLBARTOGGLE");
+            toolbarReset();
           }}
         >
           {ToolsBarOptions.map((item, index) => {
             return (
               <>
-                <div
+                <ListInlineItem
                   ref={(el) => {
                     ToolsBarOptions.length > index
                       ? (inputEls.current[index] = el)
@@ -262,7 +266,7 @@ const ToolBar = () => {
                     alt=""
                     className="toolbar-icons"
                   ></img>
-                </div>
+                </ListInlineItem>
                 {index === 0 && (
                   <span className="square border-end vertical-line"></span>
                 )}

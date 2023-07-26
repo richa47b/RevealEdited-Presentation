@@ -17,9 +17,6 @@ export const toolBarClose = () => {
   emitCustomEvent("whiteboard-event", "stop");
   emitCustomEvent("iframe-toggle", "deselectIframe");
   document.querySelector(".toolbar-list").blur();
-  document
-    .querySelector(".toolbar-list-selection")
-    .classList.remove("toolbar-list-selection");
 };
 
 export const toolbarOpen = () => {
