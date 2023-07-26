@@ -1,3 +1,19 @@
+/**
+ * Black theme for reveal.js. This is the opposite of the 'white' theme.
+ *
+ * By Hakim El Hattab, http://hakim.se
+ */
+@import url('https://fonts.googleapis.com/css2?family=Martel:wght@400;600;700;800&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,300;1,400&family=Rajdhani:wght@500;600;700&family=Roboto:ital,wght@0,100;1,100&display=swap');
+section.has-light-background,
+section.has-light-background h1,
+section.has-light-background h2,
+section.has-light-background h3,
+section.has-light-background h4,
+section.has-light-background h5,
+section.has-light-background h6 {
+  color: #222;
+}
+
 /*********************************************
   * GLOBAL STYLES
   *********************************************/
@@ -7,7 +23,10 @@ body {
 }
 
 .reveal {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: 'Martel', serif;
+  font-family: 'Open Sans', sans-serif;
+  font-family: 'Rajdhani', sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 42px;
   font-weight: normal;
   color: #fff;
@@ -51,7 +70,7 @@ body {
 }
 
 .reveal h1 {
-  font-size: 1.0em;
+  font-size: 1.5em;
 }
 
 .reveal h2 {
@@ -104,19 +123,19 @@ body {
 }
 
 .reveal ol {
-  list-style-type: none;
+  list-style-type: decimal;
 }
 
 .reveal ul {
-  list-style-type: none;
+  list-style-type: disc;
 }
 
 .reveal ul ul {
-  list-style-type: none;
+  list-style-type: square;
 }
 
 .reveal ul ul ul {
-  list-style-type: none;
+  list-style-type: circle;
 }
 
 .reveal ul ul,
